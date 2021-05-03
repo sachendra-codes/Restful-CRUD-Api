@@ -1,6 +1,5 @@
+const notes = require('../controllers/note.controller.js')
 module.exports = (app) => {
-  const notes = require('../controllers/note.controller.js')
-
   app.post('/notes', notes.create)
 
   app.get('/notes', notes.findAll)

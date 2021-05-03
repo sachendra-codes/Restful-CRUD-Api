@@ -7,12 +7,12 @@ exports.create = (req, res) => {
     })
   }
 
-  const note = new Note({
+  const notes = new Note({
     title: req.body.title || 'Untitled Note',
     content: req.body.content,
   })
 
-  note
+  notes
     .save()
     .then((data) => {
       res.send(data)
@@ -65,7 +65,7 @@ exports.update = (req, res) => {
       title: req.body.title || 'Untitled Note',
       content: req.body.content,
     },
-    { new: true }
+    { new: true, useFindAndModify: false }
   )
     .then((note) => {
       if (!note) {

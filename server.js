@@ -5,11 +5,15 @@ app.use(bodyparser.urlencoded({ extended: true }))
 app.use(bodyparser.json())
 const dbConfig = require('./config/database.config.js')
 const mongoose = require('mongoose')
-
+mongoose.set('useFindAndModify', false)
 mongoose.Promise = global.Promise
 
 mongoose
-  .connect(dbConfig.url, { useNewUrlParser: true })
+  .connect(dbConfig.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log('connected succefully')
   })
@@ -22,8 +26,9 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to easy notes application' })
 })
 
-require('./app/routes/note.routes.js')(app)
+const makeRequest = require('./app/routes/note.routes.js')
+makeRequest(app)
 
-app.listen(3000, () => {
-  console.log('server is listening at port 3000')
+app.listen(4000, () => {
+  console.log('server is listening at port 4000')
 })
